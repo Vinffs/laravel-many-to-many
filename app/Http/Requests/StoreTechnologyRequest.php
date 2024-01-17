@@ -11,7 +11,7 @@ class StoreTechnologyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class StoreTechnologyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'min:3', 'max:200', 'unique:technologies'],
+
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Name is required',
+            'name.min' => 'Name must be at least :min characters',
+            'name.max' => 'Name must be at most :max characters',
         ];
     }
 }

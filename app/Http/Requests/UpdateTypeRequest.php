@@ -33,6 +33,7 @@ class UpdateTypeRequest extends FormRequest
             'name.required' => 'Name is required',
             'name.min' => 'Name must be at least :min characters',
             'name.max' => 'Name must be at most :max characters',
+            'name.unique' => 'Name must be unique'
         ];
     }
 }

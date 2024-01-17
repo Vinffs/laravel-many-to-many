@@ -2,11 +2,16 @@
 @section('content')
     <section class="container">
         <h1>
-            {{ $technology->title }}
+            {{ $technology->name }}
         </h1>
-        <div><img src="{{ asset("storage/$technology->thumb") }}" alt="{{ $technology->title }}"></div>
-        <p>{{ $technology->description }}</p>
-        <div>{{ $technology->type ? $technology->type->name : 'Uncategorized' }}</div>
+        @if ($technology->type)
+            @foreach ($technology->projects as $project)
+                <li>{{ $project->title }}</li>
+            @endforeach
+        @else
+            <li>No Technology</li>
+        @endif
+
         <a href="{{ route('admin.technologies.index') }}" class="btn btn-danger">Return</a>
     </section>
 @endsection
