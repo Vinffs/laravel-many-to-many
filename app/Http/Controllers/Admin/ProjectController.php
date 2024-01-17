@@ -8,6 +8,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use App\Models\Type;
 use App\Http\Controllers\Controller;
+use App\Models\Technology;
 use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
@@ -18,7 +19,7 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::all();
-        return view('admin.projects.index', compact("projects"));
+        return view('admin.projects.index', compact('projects'));
     }
 
     /**
@@ -27,7 +28,8 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.projects.create', compact('types'));
+        $technologies = Technology::all();
+        return view('admin.projects.create', compact('types', 'technologies'));
     }
 
     /**
@@ -41,6 +43,10 @@ class ProjectController extends Controller
             $formData['thumb'] = $thumb_path;
         }
         $newProject = Project::create($formData);
+
+        if ($request->has('technologies')) {
+            $newProject->technologies()->attach($request->technologies);
+        }
 
         return redirect()->route('admin.projects.show', $newProject->id);
     }

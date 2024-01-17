@@ -51,15 +51,28 @@
                                     @endforeach
                                 </select>
                             </div>
-                            @error('body')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                            <div class="mb-3 mx-3">
+                                <div class="form-group">
+                                    <h6>Select technologies:</h6>
+                                    @foreach ($technologies as $technology)
+                                        <div class="form-check @error('technologies') is-invalid @enderror">
+                                            <input type="checkbox" class="form-check-input" name="technologies[]"
+                                                id="tag {{ $technology->id }}" value="{{ $technology->id }}"
+                                                {{ in_array($technology->id, old('technologies', [])) ? 'checked' : '' }}>
+                                            <label class="form-check-label">
+                                                {{ $technology->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
                             <div class="mb-3 mx-3">
                                 <label for="description" class="form-label">description:</label>
                                 <textarea name="description" id="description" cols="30" rows="10"
                                     class="form-control @error('description') is-invalid @enderror">
-                                    {{ old('description') }}
-                                </textarea>
+                                            {{ old('description') }}
+                                            </textarea>
                             </div>
                             @error('body')
                                 <div class="invalid-feedback">{{ $message }}</div>
