@@ -86,6 +86,8 @@ class ProjectController extends Controller
         $project->update($formData);
         if ($request->has('technologies')) {
             $project->technologies()->sync($request->technologies);
+        } else {
+            $project->technologies()->detach();
         }
         return redirect()->route('admin.projects.show', $project->id);
     }
