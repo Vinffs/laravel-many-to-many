@@ -58,6 +58,28 @@
                                 </select>
                             </div>
                             <div class="mb-3 mx-3">
+                                <div class="form-group">
+                                    <h6>Select technologies:</h6>
+                                    @foreach ($technologies as $technology)
+                                        <div class="form-check @error('technologies') is-invalid @enderror">
+                                            @if ($errors->any('technologies'))
+                                                <input type="checkbox" class="form-check-input" name="technologies[]"
+                                                    value="{{ $technology->id }}"
+                                                    {{ in_array($technology->id, old('technologies', $project->technologies)) ? 'checked' : '' }}>
+                                            @else
+                                                <input type="checkbox" class="form-check-input" name="technologies[]"
+                                                    id="tag {{ $technology->id }}" value="{{ $technology->id }}"
+                                                    {{ $project->technologies->contains($technology->id) ? 'checked' : '' }}>
+                                            @endif
+                                            <label class="form-check-label">
+
+                                                {{ $technology->name }}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                            <div class="mb-3 mx-3">
                                 <label for="description" class="form-label">description:</label>
                                 <textarea name="description" id="description" cols="30" rows="10"
                                     class="form-control @error('description') is-invalid @enderror">
